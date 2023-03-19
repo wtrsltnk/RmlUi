@@ -417,16 +417,20 @@ if( ENABLE_SVG_PLUGIN )
 	endif()
 	
 	message("-- Can SVG plugin be enabled - looking for lunasvg library")
-
-	find_package(lunasvg REQUIRED)
-	
-	list(APPEND CORE_LINK_LIBS ${LUNASVG_LIBRARIES})
-	list(APPEND CORE_INCLUDE_DIRS ${LUNASVG_INCLUDE_DIR})
-	list(APPEND CORE_PRIVATE_DEFS RMLUI_ENABLE_SVG_PLUGIN)
-	
-	list(APPEND Core_HDR_FILES ${SVG_HDR_FILES})
-	list(APPEND Core_PUB_HDR_FILES ${SVG_PUB_HDR_FILES})
-	list(APPEND Core_SRC_FILES ${SVG_SRC_FILES})
+        
+        if (TARGET Freetype::Freetype)
+            list(APPEND CORE_LINK_LIBS lunasvg::lunasvg)
+        else()
+            find_package(lunasvg REQUIRED)
+            
+            list(APPEND CORE_LINK_LIBS ${LUNASVG_LIBRARIES})
+            list(APPEND CORE_INCLUDE_DIRS ${LUNASVG_INCLUDE_DIR})
+            list(APPEND CORE_PRIVATE_DEFS RMLUI_ENABLE_SVG_PLUGIN)
+            
+            list(APPEND Core_HDR_FILES ${SVG_HDR_FILES})
+            list(APPEND Core_PUB_HDR_FILES ${SVG_PUB_HDR_FILES})
+            list(APPEND Core_SRC_FILES ${SVG_SRC_FILES})
+        endif()
 
 	message("-- Can SVG plugin be enabled - yes - lunasvg library found")
 endif()
