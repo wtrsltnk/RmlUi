@@ -418,8 +418,8 @@ if( ENABLE_SVG_PLUGIN )
 	
 	message("-- Can SVG plugin be enabled - looking for lunasvg library")
         
-        if (TARGET Freetype::Freetype)
-            list(APPEND CORE_LINK_LIBS lunasvg::lunasvg)
+        if (TARGET lunasvg)
+            list(APPEND CORE_LINK_LIBS lunasvg)
         else()
             find_package(lunasvg REQUIRED)
             
